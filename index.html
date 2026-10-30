@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#0E0C0B">
+<title>Máster Sushi · Menú digital</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,700;12..96,800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0E0C0B; --card:#171412; --line:#2A2521;
+  --red:#D7263D; --red-soft:rgba(215,38,61,.14);
+  --aji:#F2B632; --cream:#F5EDE0; --muted:#A39A8F;
+  --display:'Bricolage Grotesque','Plus Jakarta Sans',system-ui,sans-serif;
+  --body:'Plus Jakarta Sans',system-ui,-apple-system,sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--cream);font-family:var(--body);-webkit-font-smoothing:antialiased;padding-bottom:calc(120px + env(safe-area-inset-bottom,0px))}
+button{font-family:inherit;cursor:pointer}
+button:focus-visible,a:focus-visible{outline:2px solid var(--aji);outline-offset:2px}
+ 
+/* HERO */
+.hero{position:relative;min-height:290px;display:flex;flex-direction:column;justify-content:flex-end;padding:24px 20px 26px;padding-top:calc(24px + env(safe-area-inset-top,0px));
+  background:linear-gradient(180deg,rgba(14,12,11,.35) 0%,rgba(14,12,11,.75) 60%,var(--bg) 100%),url(https://images.unsplash.com/photo-1579871494447-9811cf80d66c?w=900) center/cover,#2a1a17}
+.hero h1{font-family:var(--display);font-weight:800;font-size:clamp(2.8rem,15vw,4.2rem);line-height:.92;letter-spacing:-1.5px}
+.hero h1 em{font-style:normal;color:var(--red);display:block}
+.hero p{margin-top:12px;color:var(--cream);opacity:.85;font-size:.95rem;max-width:30ch;line-height:1.45}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px}
+.chip{background:rgba(245,237,224,.1);border:1px solid rgba(245,237,224,.18);backdrop-filter:blur(8px);padding:7px 12px;border-radius:99px;font-size:.78rem;font-weight:600}
+.chip b{color:var(--aji)}
+ 
+/* CATEGORÍAS */
+.tabs-wrap{position:sticky;top:0;z-index:40;background:rgba(14,12,11,.92);backdrop-filter:blur(14px);border-bottom:1px solid var(--line);padding-top:env(safe-area-inset-top,0px)}
+.tabs{display:flex;gap:8px;overflow-x:auto;padding:12px 16px;scrollbar-width:none;scroll-snap-type:x proximity}
+.tabs::-webkit-scrollbar{display:none}
+.tab{scroll-snap-align:start;flex:none;background:transparent;border:1px solid var(--line);color:var(--muted);padding:10px 16px;border-radius:99px;font-size:.88rem;font-weight:600;transition:background .2s,color .2s,border-color .2s}
+.tab.on{background:var(--cream);color:var(--bg);border-color:var(--cream)}
+ 
+main{max-width:560px;margin:0 auto;padding:8px 16px}
+.sec{display:none;padding-top:22px}
+.sec.on{display:block}
+.sec h2{font-family:var(--display);font-size:1.6rem;font-weight:800;letter-spacing:-.5px}
+.sec .sub{color:var(--muted);font-size:.85rem;margin:4px 0 16px}
+.list{display:flex;flex-direction:column;gap:14px}
+ 
+/* TARJETAS */
+.card{background:var(--card);border:1px solid var(--line);border-radius:18px;overflow:hidden;display:flex;gap:14px;padding:12px}
+.card .img{width:100px;height:100px;border-radius:12px;flex:none;object-fit:cover;background:linear-gradient(135deg,#2a1a17,#3b1f1f)}
+.body{flex:1;min-width:0;display:flex;flex-direction:column;gap:6px}
+.card h3{font-size:1rem;font-weight:700;line-height:1.25}
+.card p{font-size:.8rem;color:var(--muted);line-height:1.45}
+.foot{display:flex;justify-content:space-between;align-items:center;margin-top:auto;padding-top:4px}
+.price{font-family:var(--display);font-weight:800;font-size:1.15rem;color:var(--aji)}
+.add{background:var(--red);color:#fff;border:0;padding:9px 16px;border-radius:99px;font-weight:700;font-size:.82rem;min-height:40px;transition:transform .15s}
+.add:active{transform:scale(.94)}
+.add.in{background:var(--red-soft);color:var(--cream);box-shadow:inset 0 0 0 1px var(--red)}
+ 
+/* TARJETA DESTACADA */
+.card.big{flex-direction:column;padding:0;gap:0}
+.card.big .img{width:100%;height:190px;border-radius:0}
+.card.big .body{padding:14px 16px 16px}
+.card.big h3{font-size:1.15rem}
+.tag{position:absolute;top:12px;left:12px;background:var(--aji);color:#1a1206;font-size:.72rem;font-weight:800;padding:5px 11px;border-radius:99px}
+.imgwrap{position:relative}
+ 
+/* BARRA DE PEDIDO */
+.bar{position:fixed;left:50%;bottom:calc(14px + env(safe-area-inset-bottom,0px));transform:translate(-50%,0);width:calc(100% - 28px);max-width:532px;z-index:60;background:var(--red);color:#fff;border:0;border-radius:18px;padding:14px 18px;display:flex;justify-content:space-between;align-items:center;font-size:.95rem;font-weight:700;box-shadow:0 12px 30px rgba(215,38,61,.4);transition:transform .25s,opacity .25s}
+.bar.hide{transform:translate(-50%,140%);opacity:0;pointer-events:none}
+.bar .n{background:rgba(0,0,0,.25);border-radius:99px;padding:3px 10px;margin-right:10px;font-size:.85rem}
+.bar.bump{animation:bump .3s}
+@keyframes bump{50%{transform:translate(-50%,0) scale(1.03)}}
+ 
+/* PEDIDO (hoja inferior) */
+.scrim{position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:70;opacity:0;pointer-events:none;transition:opacity .25s}
+.scrim.on{opacity:1;pointer-events:auto}
+.sheet{position:fixed;left:0;right:0;bottom:0;z-index:80;max-width:560px;margin:0 auto;background:#1b1715;border-radius:24px 24px 0 0;padding:8px 18px calc(18px + env(safe-area-inset-bottom,0px));max-height:90vh;overflow-y:auto;overscroll-behavior:contain;transform:translateY(105%);transition:transform .3s ease}
+.sheet.on{transform:none}
+.grab{width:42px;height:4px;border-radius:9px;background:var(--line);margin:6px auto 14px}
+.sheet h2{font-family:var(--display);font-size:1.4rem;margin-bottom:8px}
+.lines{margin-bottom:4px}
+.line{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:12px 0;border-bottom:1px solid var(--line)}
+.line span{font-size:.92rem;font-weight:600}
+.line small{display:block;color:var(--muted);font-weight:500;margin-top:2px}
+.qty{display:flex;align-items:center;gap:4px;flex:none}
+.qty button{width:36px;height:36px;border-radius:50%;border:1px solid var(--line);background:var(--card);color:var(--cream);font-size:1.1rem}
+.qty b{min-width:22px;text-align:center}
+.total{display:flex;justify-content:space-between;font-size:1.1rem;font-weight:700;padding:16px 0 12px}
+.total b{font-family:var(--display);font-size:1.4rem;color:var(--aji)}
+.send{display:block;text-align:center;background:#1FA855;color:#fff;text-decoration:none;font-weight:700;padding:15px;border-radius:14px}
+.clear{display:block;background:none;border:0;color:var(--muted);font-size:.82rem;margin:12px auto 0;padding:8px}
+.form{padding-top:16px}
+.form h3{font-size:.95rem;margin-bottom:10px}
+.seg{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.seg label{position:relative}
+.seg input{position:absolute;opacity:0}
+.seg span{display:block;text-align:center;padding:13px 8px;border:1px solid var(--line);border-radius:12px;font-weight:600;font-size:.88rem;color:var(--muted);background:var(--card)}
+.seg input:checked+span{border-color:var(--red);background:var(--red-soft);color:var(--cream)}
+.seg input:focus-visible+span{outline:2px solid var(--aji)}
+.fld{display:block;margin-top:12px;font-size:.82rem;font-weight:600;color:var(--muted)}
+.fld input,.fld textarea{width:100%;margin-top:6px;background:var(--card);border:1px solid var(--line);color:var(--cream);border-radius:12px;padding:13px 14px;font:500 16px var(--body);resize:none}
+.fld input:focus,.fld textarea:focus{outline:none;border-color:var(--aji)}
+.err{color:#ff7a8a;font-size:.85rem;min-height:1.3em;margin-bottom:8px}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}html{scroll-behavior:auto}}
+</style>
+</head>
+<body>
+ 
+<header class="hero">
+  <h1>Máster<em>Sushi</em></h1>
+  <p>Sushi, gohan y promociones en Cunco. Arma tu pedido y envíalo por WhatsApp.</p>
+  <div class="chips">
+    <span class="chip">Pedidos por <b>WhatsApp</b></span>
+    <span class="chip">Rolls, gohan y promociones</span>
+  </div>
+</header>
+ 
+<div class="tabs-wrap"><nav class="tabs" id="tabs" aria-label="Categorías"></nav></div>
+<main id="menu"></main>
+ 
+<button class="bar hide" id="bar" onclick="openSheet(true)">
+  <span><span class="n" id="barN">0</span>Ver mi pedido</span><span id="barT">$0</span>
+</button>
+ 
+<div class="scrim" id="scrim" onclick="openSheet(false)"></div>
+<section class="sheet" id="sheet" aria-label="Mi pedido">
+  <div class="grab"></div>
+  <h2>Tu pedido</h2>
+  <div class="lines" id="lines"></div>
+  <div class="form">
+    <h3>Tus datos</h3>
+    <div class="seg">
+      <label><input type="radio" name="tipo" value="retiro" checked onchange="toggleAddr()"><span>Retiro en local</span></label>
+      <label><input type="radio" name="tipo" value="domicilio" onchange="toggleAddr()"><span>A domicilio</span></label>
+    </div>
+    <label class="fld">Tu nombre<input id="fName" type="text" autocomplete="name" placeholder="Ej: María Pérez"></label>
+    <label class="fld" id="addrBox" style="display:none">Dirección de entrega<textarea id="fAddr" rows="2" autocomplete="street-address" placeholder="Calle, número y referencia"></textarea></label>
+  </div>
+  <div class="total"><span>Total</span><b id="total">$0</b></div>
+  <p class="err" id="err" role="alert"></p>
+  <a class="send" id="send" href="#" target="_blank" rel="noopener" onclick="return sendOrder(this)">Enviar pedido por WhatsApp</a>
+  <button class="clear" onclick="clearCart()">Vaciar pedido</button>
+</section>
+ 
+<script>
+const PHONE="56935638586";
+const U=id=>`https://images.unsplash.com/photo-${id}?w=${'600'}`;
+const CATS=[
+ {id:"promos",t:"Promociones",s:"Ideales para compartir"},
+ {id:"gohan",t:"Gohan",s:"Armalo a tu gusto"},
+ {id:"rolls",t:"Rolls especiales",s:"Nuestras creaciones de la casa"},
+ {id:"extras",t:"Aperitivos y extras",s:"Para acompañar"},
+ {id:"bebidas",t:"Bebidas",s:"Frías y listas"}
+];
+const IT=[
+ {c:"promos",n:"Promo 60 cortes palta",p:27500,big:1,tag:"Más pedida",i:"1611143669185-af224c5e3252",d:"20 pollo teriyaki, queso y palta (panko), 10 kanikama, queso y palta (panko), 10 pollo, queso y palta (queso crema), 10 kanikama, queso y palta y 10 pollo, queso y palta (semilla)."},
+ {c:"promos",n:"Promo vip 👑",p:20000,big:1,tag:"VIP",i:"1579871494447-9811cf80d66c",d:"10 pollo katsu, queso y palta, 10 pollo teriyaki y pimentón (panko), 10 salmón, queso y palta (semilla), 10 camarón salteado y cebollín (palta)."},
+ {c:"promos",n:"Promo 40 cortes",p:17000,i:"1553621042-f6e147245754",d:"20 cortes de pollo, queso y cebollín (panko), 10 kanikama (semilla), 10 pollo (queso crema)."},
+ {c:"promos",n:"Promoción 30 cortes ✨",p:13990,i:"1611143669185-af224c5e3252",d:"10 pollo, palta y queso, 10 pollo, cebollín y queso, 10 kanikama, cebollín y queso. Fritos en panko."},
+ {c:"promos",n:"Promo 100 cortes",p:50000,i:"1553621042-f6e147245754",d:"Gran variedad de rolls surtidos, ideal para compartir en familia."},
+ {c:"gohan",n:"Gohan a elección",p:7000,big:1,i:"1546069901-ba9599a7e63c",d:"Elige 1 base (arroz o papas fritas), 1 proteína (pollo, salmón, camarón o kanikama) y 3 ingredientes."},
+ {c:"rolls",n:"Rolls acevichado premium",p:11990,big:1,tag:"Premium",i:"1563379091339-03b21ab4a4f8",d:"Camarón katsu, palta y queso, envuelto en salmón flameado, con salsa acevichada y topping de ceviche."},
+ {c:"rolls",n:"Sushi topping lomo salteado",p:10990,i:"1617196034796-73dfa7b1fd56",d:"Palta y queso crema, envuelto en palta con topping de lomo salteado."},
+ {c:"rolls",n:"Pasión rolls",p:10990,i:"1563379091339-03b21ab4a4f8",d:"Envuelto en salmón flameado, con camarón apanado y salmón. Salsa de maracuyá y sweet chili."},
+ {c:"rolls",n:"Rolls vip masago",p:9990,i:"1611143669185-af224c5e3252",d:"Salmón, pulpo, queso y palta envuelto en masago."},
+ {c:"rolls",n:"Ají de gallina",p:9990,i:"1579871494447-9811cf80d66c",d:"Pollo katsu y pimentón, envuelto en queso crema con topping de ají de gallina."},
+ {c:"rolls",n:"Rolls Texas ❤️",p:9100,i:"1617196034796-73dfa7b1fd56",d:"Pollo furai, cebollín y queso crema. Frito en panko, crujiente y cremoso."},
+ {c:"rolls",n:"Tentación Marina",p:8990,i:"1617196034796-73dfa7b1fd56",d:"Camarón apanado, queso crema y palta envuelto en masago, con salsa acevichada."},
+ {c:"rolls",n:"Rolls mediterráneo",p:5500,i:"1579871494447-9811cf80d66c",d:"Envuelto en salmón, relleno de pollo, palta, queso y cebollín."},
+ {c:"extras",n:"Papas fritas + filetitos de pollo",p:8000,i:"1573080496219-bb080dd4f877",d:"1 porción de papas fritas y 7 filetitos de pollo crujientes."},
+ {c:"extras",n:"Minni Master",p:7490,i:"1573080496219-bb080dd4f877",d:"4 mini handrolls. Elige 1 proteína y 2 ingredientes."},
+ {c:"extras",n:"Empanadas de queso (docena)",p:4500,i:"1541529086526-db283c563270",d:"La docena de crujientes empanadas de queso."},
+ {c:"extras",n:"Papas fritas 🍟",p:4000,i:"1573080496219-bb080dd4f877",d:"Porción de 400 gramos de papas fritas crujientes."},
+ {c:"extras",n:"Nuggets de pollo",p:3000,i:"1562967914-608f82629710",d:"Porción individual. Promo: 5 nuggets por $2.500."},
+ {c:"bebidas",n:"Bebidas en lata 240/350 ml",p:2000,i:"1622483767028-3f66f32aef97",d:"Línea Coca-Cola, Fanta y Sprite Zero."},
+ {c:"bebidas",n:"Café helado en lata",p:2000,i:"1517701604599-bb29b565090c",d:"Nescafé: Latte, Mocha o Cold Brew Latte."}
+];
+const fmt=n=>"$"+n.toLocaleString("es-CL");
+const cart={}; let current="all";
+ 
+function card(x,k){
+  const img=`<img class="img" loading="lazy" src="${U(x.i)}" alt="${x.n}" onerror="this.removeAttribute('src')">`;
+  const head=x.big?`<div class="imgwrap">${img}${x.tag?`<span class="tag">${x.tag}</span>`:""}</div>`:img;
+  return `<article class="card ${x.big?"big":""}">${head}<div class="body"><h3>${x.n}</h3><p>${x.d}</p>
+  <div class="foot"><span class="price">${fmt(x.p)}</span><button class="add ${cart[k]?"in":""}" onclick="add(${k})">${cart[k]?"En pedido ×"+cart[k]:"Agregar"}</button></div></div></article>`;
+}
+function render(){
+  document.getElementById("tabs").innerHTML=[{id:"all",t:"Todo"},...CATS].map(c=>`<button class="tab ${c.id===current?"on":""}" onclick="show('${c.id}')">${c.t}</button>`).join("");
+  document.getElementById("menu").innerHTML=CATS.map(c=>`<section class="sec ${current==="all"||current===c.id?"on":""}"><h2>${c.t}</h2><p class="sub">${c.s}</p><div class="list">${IT.map((x,k)=>x.c===c.id?card(x,k):"").join("")}</div></section>`).join("");
+}
+function show(id){current=id;render();window.scrollTo({top:document.querySelector(".tabs-wrap").offsetTop,behavior:"smooth"})}
+function add(k){cart[k]=(cart[k]||0)+1;update();const b=document.getElementById("bar");b.classList.remove("bump");void b.offsetWidth;b.classList.add("bump")}
+function change(k,d){cart[k]=(cart[k]||0)+d;if(cart[k]<=0)delete cart[k];update()}
+function clearCart(){for(const k in cart)delete cart[k];update();openSheet(false)}
+function openSheet(o){document.getElementById("sheet").classList.toggle("on",o);document.getElementById("scrim").classList.toggle("on",o)}
+function toggleAddr(){document.getElementById("addrBox").style.display=document.querySelector('input[name=tipo]:checked').value==="domicilio"?"block":"none"}
+function sendOrder(a){
+  const name=document.getElementById("fName").value.trim(), addr=document.getElementById("fAddr").value.trim();
+  const dom=document.querySelector('input[name=tipo]:checked').value==="domicilio", err=document.getElementById("err");
+  err.textContent="";
+  if(!name){err.textContent="Escribe tu nombre para continuar.";document.getElementById("fName").focus();return false}
+  if(dom&&!addr){err.textContent="Escribe tu dirección para el despacho.";document.getElementById("fAddr").focus();return false}
+  const ks=Object.keys(cart), t=ks.reduce((s,k)=>s+cart[k]*IT[k].p,0);
+  const msg="Hola, Máster Sushi Cunco! Quisiera hacer un pedido.\n\n"
+    +`Nombre: ${name}\nEntrega: ${dom?"A domicilio":"Retiro en local"}\n`+(dom?`Dirección: ${addr}\n`:"")
+    +"\nPedido:\n"+ks.map(k=>`- ${cart[k]} x ${IT[k].n} (${fmt(IT[k].p*cart[k])})`).join("\n")+`\n\nTotal: ${fmt(t)}`;
+  a.href=`https://wa.me/${PHONE}?text=${encodeURIComponent(msg)}`;
+  return true;
+}
+function update(){
+  const ks=Object.keys(cart);
+  const n=ks.reduce((s,k)=>s+cart[k],0), t=ks.reduce((s,k)=>s+cart[k]*IT[k].p,0);
+  document.getElementById("bar").classList.toggle("hide",n===0);
+  document.getElementById("barN").textContent=n;
+  document.getElementById("barT").textContent=fmt(t);
+  document.getElementById("total").textContent=fmt(t);
+  document.getElementById("lines").innerHTML=ks.map(k=>`<div class="line"><span>${IT[k].n}<small>${fmt(IT[k].p*cart[k])}</small></span><div class="qty"><button onclick="change(${k},-1)" aria-label="Quitar uno">−</button><b>${cart[k]}</b><button onclick="change(${k},1)" aria-label="Agregar uno">+</button></div></div>`).join("");
+  if(n===0)openSheet(false);
+  render();
+}
+render();
+</script>
+</body>
+</html>
+ 
